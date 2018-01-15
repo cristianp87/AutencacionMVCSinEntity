@@ -12,14 +12,26 @@ namespace AutenticateWithOutIdentity.Models
     public class ApplicationUser : IUser
     {
         public DateTime CreateDate { get; set; }
+        public DateTime ModificationDate { get; set; }
         public DateTime BirthDate { get; set; }
-        public string Password { get; set; }
+        public string PasswordHash { get; set; }
         public string Id { get; set; }
         public string UserName { get; set; }
 
+        public string LastName { get; set; }
+        public int IdTypeIdentification { get; set; }
+
+        public string NoIdentification { get; set; }
+
+        public int IdObject { get; set; }
+
+        public int UserAp { get; set; }
+
+        public int IdStatus { get; set; }
+
         public ApplicationUser()
         {
-            CreateDate = DateTime.Now;
+            ModificationDate = DateTime.Now;
         }
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(
     UserManager<ApplicationUser> manager)
