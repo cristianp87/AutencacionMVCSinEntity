@@ -2,7 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web;
+using Microsoft.Owin.Security;
 
 namespace AutenticateWithOutIdentity.Models
 {
@@ -11,26 +14,25 @@ namespace AutenticateWithOutIdentity.Models
         public DateTime CreateDate { get; set; }
         public DateTime BirthDate { get; set; }
         public string Password { get; set; }
+        public string Id { get; set; }
+        public string UserName { get; set; }
 
         public ApplicationUser()
         {
             CreateDate = DateTime.Now;
         }
-        public string Id
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(
+    UserManager<ApplicationUser> manager)
         {
-            get { return "GUID"; }
-        }
-
-        public string UserName
-        {
-            get
-            {
-                return "san";
-            }
-            set
-            {
-                ;
-            }
+            // Note the authenticationType must match the one 
+            // defined in CookieAuthenticationOptions.AuthenticationType
+            var userIdentity =
+                await manager.CreateIdentityAsync(this,
+                    DefaultAuthenticationTypes.ApplicationCookie);
+            //userIdentity = null;
+            // Add custom user claims here
+          //  var userIdentity = IAuthenticationManager;
+            return userIdentity;
         }
     }
 }

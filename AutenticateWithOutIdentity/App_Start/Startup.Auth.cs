@@ -2,6 +2,9 @@
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
+using System;
+using Microsoft.AspNet.Identity.Owin;
+using AutenticateWithOutIdentity.Models;
 
 namespace AutenticateWithOutIdentity
 {
@@ -14,7 +17,16 @@ namespace AutenticateWithOutIdentity
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/Account/Login")
+                LoginPath = new PathString("/Account/Login"),
+                Provider = new CookieAuthenticationProvider
+                {
+                    OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<CustomUserManager, ApplicationUser>(
+                    validateInterval: TimeSpan.FromMinutes(1),
+                    regenerateIdentity: (manager, user) =>  user.GenerateUserIdentityAsync(manager)),
+                },
+                SlidingExpiration = true,
+                //Use this to customize the timeout duration if the default is too short/long
+                ExpireTimeSpan = TimeSpan.FromMinutes(1)
             });
             // Use a cookie to temporarily store information about a user logging in with a third party login provider 
             // app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie); 

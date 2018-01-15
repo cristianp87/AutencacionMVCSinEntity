@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 using AutenticateWithOutIdentity.Models;
 
+
 namespace AutenticateWithOutIdentity.Controllers
 {
     [Authorize]

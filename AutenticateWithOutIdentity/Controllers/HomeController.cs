@@ -10,6 +10,7 @@ namespace AutenticateWithOutIdentity.Controllers
     {
         public ActionResult Index()
         {
+            var owin = HttpContext.GetOwinContext();
             return View();
         }
 

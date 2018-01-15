@@ -37,6 +37,7 @@ namespace AutenticateWithOutIdentity.Models
 
                 var lUserapp = new ApplicationUser
                 {
+                    Id =  lUser.LIdUser.ToString(),
                     BirthDate = DateTime.Now,
                     CreateDate = DateTime.Now,
                     Password = lUser.LPassword,
