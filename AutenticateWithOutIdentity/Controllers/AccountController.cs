@@ -67,6 +67,63 @@ namespace AutenticateWithOutIdentity.Controllers
             return View(model);
         }
 
+        [AllowAnonymous]
+        public ActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult Register(ApplicationUser pUser)
+        {
+            var bo_Object = new BO_BusinessManagement.Bo_Object()
+            {
+                LIdObject = 3011
+            };
+            var bo_Status = new BO_BusinessManagement.Bo_Status()
+            {
+                LIdStatus = "APPRO"
+            };
+            var bo_TypeIdentification = new BO_BusinessManagement.Bo_TypeIdentification()
+            {
+                LIdTypeIdentification = 2
+            };
+            var bo_Role = new BO_BusinessManagement.Bo_Role()
+            {
+                LIdRole = 1
+            };
+            PasswordHasher lPass = new PasswordHasher();
+            pUser.PasswordHash = lPass.HashPassword(pUser.PasswordHash); ;
+            var bo_User = new BO_BusinessManagement.Bo_User() {
+                LBirthDate = pUser.BirthDate,
+                LEmail = "",
+                LFLastName = pUser.LastName,
+                LException = "",
+                LFNameUser = pUser.FirstName,
+                LIdUser = 0,
+                LInnerException = "",
+                LMessageDao = "",
+                LNoIdentification = pUser.NoIdentification,
+                LObject = bo_Object,
+                LPassword = pUser.PasswordHash,
+                LSLastName = pUser.SLastName,
+                LSNameUser = pUser.SecondName,
+                LStatus = bo_Status,
+                LTypeIdentification = bo_TypeIdentification,
+                LUser = pUser.User,
+                LRole = bo_Role
+            };
+
+            var lResult = Bll_Business.Bll_User.bll_InsertUser(bo_User);
+            if (string.IsNullOrEmpty(lResult))
+            {
+                return View("Login");
+            }
+            return View();
+        }
+
 
 
         // POST: /Account/LogOff 
@@ -108,7 +165,6 @@ namespace AutenticateWithOutIdentity.Controllers
 
             ///Open Question- Hear it create claimIdentity. But we nothing add as such Claims but just User object. 
             //public virtual Task<ClaimsIdentity> CreateIdentityAsync(TUser user, string authenticationType); 
-
             var identity = await PCustomUserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
             //var identity = await UserManager1.CreateAsync(user);//, DefaultAuthenticationTypes.ApplicationCookie); 
 

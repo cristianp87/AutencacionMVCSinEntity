@@ -16,18 +16,22 @@ namespace AutenticateWithOutIdentity.Models
         public DateTime BirthDate { get; set; }
         public string PasswordHash { get; set; }
         public string Id { get; set; }
-        public string UserName { get; set; }
+        public string FirstName { get; set; }
+        public string SecondName { get; set; }
 
         public string LastName { get; set; }
+        public string SLastName { get; set; }
         public int IdTypeIdentification { get; set; }
 
         public string NoIdentification { get; set; }
 
         public int IdObject { get; set; }
 
-        public int UserAp { get; set; }
+        public string User { get; set; }
 
-        public int IdStatus { get; set; }
+        public string UserName { get; set; }
+
+        public string IdStatus { get; set; }
 
         public ApplicationUser()
         {

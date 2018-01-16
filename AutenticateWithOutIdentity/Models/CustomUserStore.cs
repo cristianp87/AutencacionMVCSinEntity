@@ -37,11 +37,13 @@ namespace AutenticateWithOutIdentity.Models
 
                 var lUserapp = new ApplicationUser
                 {
-                    Id =  lUser.LIdUser.ToString(),
+                    Id = lUser.LIdUser.ToString(),
                     BirthDate = DateTime.Now,
                     CreateDate = DateTime.Now,
-                    Password = lUser.LPassword,
-                    UserName = lUser.LUser
+                    PasswordHash = lUser.LPassword,
+                    User = lUser.LUser,
+                    UserName = lUser.LFNameUser + " " + lUser.LFLastName
+           
                 };
 
                 return System.Threading.Tasks.Task.Run(()=> { return lUserapp; }); //System.Threading.Tasks.Task.FromResult(lUserapp);

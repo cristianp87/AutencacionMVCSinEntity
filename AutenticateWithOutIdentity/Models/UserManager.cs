@@ -29,7 +29,7 @@ namespace AutenticateWithOutIdentity.Models
             applicationUser = await FindByNameAsync(userName);
             if(applicationUser != null)
             {
-                PasswordVerificationResult result = PasswordHasher.VerifyHashedPassword(applicationUser.Password, password);
+                PasswordVerificationResult result = PasswordHasher.VerifyHashedPassword(applicationUser.PasswordHash, password);
                 if (result == PasswordVerificationResult.Success)
                 {
                     return applicationUser;
