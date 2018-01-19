@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace AutenticateWithOutIdentity.Controllers
 {
+    [Authorize(Roles = "Administrador")]
     public class HomeController : Controller
     {
         public ActionResult Index()

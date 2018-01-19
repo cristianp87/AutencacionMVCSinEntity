@@ -196,8 +196,11 @@
     </Compile>
     <Compile Include="Helpers\HAutentication.cs" />
     <Compile Include="Models\AccountViewModel.cs" />
+    <Compile Include="Models\ApplicationRole.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
+    <Compile Include="Models\CustomRoleStore.cs" />
     <Compile Include="Models\CustomUserStore.cs" />
+    <Compile Include="Models\RoleManager.cs" />
     <Compile Include="Models\UserManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

@@ -26,7 +26,7 @@ namespace AutenticateWithOutIdentity
                 },
                 SlidingExpiration = true,
                 //Use this to customize the timeout duration if the default is too short/long
-                ExpireTimeSpan = TimeSpan.FromMinutes(1)
+                ExpireTimeSpan = TimeSpan.FromMinutes(10)
             });
             // Use a cookie to temporarily store information about a user logging in with a third party login provider 
             // app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie); 

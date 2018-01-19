@@ -13,7 +13,7 @@ using AutenticateWithOutIdentity.Models;
 
 namespace AutenticateWithOutIdentity.Controllers
 {
-    [Authorize]
+    [Authorize()]
     public class AccountController : Controller
     {
         public CustomUserManager PCustomUserManager { get; private set; }
@@ -166,6 +166,7 @@ namespace AutenticateWithOutIdentity.Controllers
             ///Open Question- Hear it create claimIdentity. But we nothing add as such Claims but just User object. 
             //public virtual Task<ClaimsIdentity> CreateIdentityAsync(TUser user, string authenticationType); 
             var identity = await PCustomUserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+
             //var identity = await UserManager1.CreateAsync(user);//, DefaultAuthenticationTypes.ApplicationCookie); 
 
             AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = isPersistent }, identity);

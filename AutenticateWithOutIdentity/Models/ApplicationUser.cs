@@ -33,6 +33,8 @@ namespace AutenticateWithOutIdentity.Models
 
         public string IdStatus { get; set; }
 
+        public IList<string> Roles { get; set; }
+
         public ApplicationUser()
         {
             ModificationDate = DateTime.Now;

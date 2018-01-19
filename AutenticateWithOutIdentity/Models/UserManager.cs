@@ -27,6 +27,7 @@ namespace AutenticateWithOutIdentity.Models
         {
             ApplicationUser applicationUser = new ApplicationUser();
             applicationUser = await FindByNameAsync(userName);
+            var roles = await this.GetRolesAsync(applicationUser.Id);
             if(applicationUser != null)
             {
                 PasswordVerificationResult result = PasswordHasher.VerifyHashedPassword(applicationUser.PasswordHash, password);

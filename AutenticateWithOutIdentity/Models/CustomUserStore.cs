@@ -5,10 +5,11 @@ using System.Web;
 using Microsoft.AspNet.Identity;
 using Bll_Business;
 using BO_BusinessManagement;
+using System.Threading.Tasks;
 
 namespace AutenticateWithOutIdentity.Models
 {
-    public class CustomUserSore : IUserStore<ApplicationUser>
+    public class CustomUserSore : IUserStore<ApplicationUser>, IUserRoleStore<ApplicationUser>
     {
 
         public System.Threading.Tasks.Task CreateAsync(ApplicationUser user)
@@ -28,6 +29,7 @@ namespace AutenticateWithOutIdentity.Models
             throw new NotImplementedException();
         }
 
+
         public System.Threading.Tasks.Task<ApplicationUser>  FindByNameAsync(string userName)
         {
             Bo_User lUser = new Bo_User();
@@ -42,7 +44,7 @@ namespace AutenticateWithOutIdentity.Models
                     CreateDate = DateTime.Now,
                     PasswordHash = lUser.LPassword,
                     User = lUser.LUser,
-                    UserName = lUser.LFNameUser + " " + lUser.LFLastName
+                    UserName = lUser.LFNameUser + " " + lUser.LFLastName                    
            
                 };
 
@@ -60,10 +62,51 @@ namespace AutenticateWithOutIdentity.Models
             throw new NotImplementedException();
         }
 
+
         void IDisposable.Dispose()
         {
             // throw new NotImplementedException(); 
 
+        }
+
+        public Task AddToRoleAsync(ApplicationUser user, string roleName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RemoveFromRoleAsync(ApplicationUser user, string roleName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IList<string>> GetRolesAsync(string userId)
+        {
+            IList<Bo_Role> lRole;
+            lRole = Bll_Role.GetRolesByUser(Convert.ToInt32(userId));
+            IList<string> lListApprole= null;
+            if (string.IsNullOrEmpty(lRole.First().LException))
+            {
+                lRole.ToList().ForEach(item =>
+                {
+                    lListApprole.ToList().Add(item.LNameRole);
+                });
+
+                return Task.Run(() => { return lListApprole; }); //System.Threading.Tasks.Task.FromResult(lUserapp);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public Task<bool> IsInRoleAsync(ApplicationUser user, string roleName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IList<string>> GetRolesAsync(ApplicationUser user)
+        {
+            throw new NotImplementedException();
         }
     }
 }
