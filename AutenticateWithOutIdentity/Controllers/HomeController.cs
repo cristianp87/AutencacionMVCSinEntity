@@ -9,6 +9,7 @@ namespace AutenticateWithOutIdentity.Controllers
     [Authorize(Roles = "Administrador")]
     public class HomeController : Controller
     {
+        [AllowAnonymous]
         public ActionResult Index()
         {
             var owin = HttpContext.GetOwinContext();

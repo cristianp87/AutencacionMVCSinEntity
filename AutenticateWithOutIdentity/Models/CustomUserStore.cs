@@ -26,7 +26,33 @@ namespace AutenticateWithOutIdentity.Models
 
         public System.Threading.Tasks.Task<ApplicationUser> FindByIdAsync(string userId)
         {
-            throw new NotImplementedException();
+            Bo_User lUser = new Bo_User();
+            var lIdUser = 0;
+            if (int.TryParse(userId, out lIdUser))
+            { 
+                lUser = Bll_User.bll_GetUserById(Convert.ToInt32(userId));
+                if (string.IsNullOrEmpty(lUser.LException))
+                {
+
+                    var lUserapp = new ApplicationUser
+                    {
+                        Id = lUser.LIdUser.ToString(),
+                        BirthDate = DateTime.Now,
+                        CreateDate = DateTime.Now,
+                        PasswordHash = lUser.LPassword,
+                        User = lUser.LUser,
+                        UserName = lUser.LFNameUser + " " + lUser.LFLastName
+
+                    };
+
+                    return System.Threading.Tasks.Task.Run(() => { return lUserapp; }); //System.Threading.Tasks.Task.FromResult(lUserapp);
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else { return null; }
         }
 
 
@@ -106,7 +132,23 @@ namespace AutenticateWithOutIdentity.Models
 
         public Task<IList<string>> GetRolesAsync(ApplicationUser user)
         {
-            throw new NotImplementedException();
+            IList<Bo_Role> lRole;
+            lRole = Bll_Role.GetRolesByUser(Convert.ToInt32(user.Id));
+            IList<string> lListApprole = new List<string>();
+            
+            if (string.IsNullOrEmpty(lRole.First().LException))
+            {
+                lRole.ToList().ForEach(item =>
+                {
+                    lListApprole.Add(item.LNameRole);
+                });
+
+                return Task.Run(() => { return lListApprole; }); //System.Threading.Tasks.Task.FromResult(lUserapp);
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
